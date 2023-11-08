@@ -23,10 +23,9 @@ Save and load data to/from a file
 
 ## How to Start the Command Interpreter:
 To start the command interpreter, follow these steps:
-
-### Open the terminal or command prompt.
-### Navigate to the directory where the command interpreter is located.
-### Run the command interpreter script.
+Open the terminal or command prompt.
+Navigate to the directory where the command interpreter is located.
+Run the command interpreter script.
 
 
 # How to Use the Command Interpreter:
