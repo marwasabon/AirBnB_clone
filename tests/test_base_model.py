@@ -2,8 +2,8 @@
 
 from models.base_model import BaseModel
 import unittest
-
-# Testing the BaseModel class
+import uuid
+from datetime import datetime
 
 class TestBaseModel(unittest.TestCase):
     
@@ -24,7 +24,7 @@ class TestBaseModel(unittest.TestCase):
         base_model.save()
         self.assertNotEqual(initial_updated_at, base_model.updated_at)
     
-    def data_test(self):
+    def test_data(self):
         my_model = BaseModel()
         my_model.name = "My First Model"
         my_model.my_number = 89
