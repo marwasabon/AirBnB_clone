@@ -3,7 +3,7 @@
 
 import uuid
 from datetime import datetime
-
+from __init__ import storage
 
 class BaseModel:
     """This class will defines all common attributes/methods
@@ -56,3 +56,4 @@ class BaseModel:
         obj_dict['created_at'] = self.created_at.isoformat()
         obj_dict['updated_at'] = self.updated_at.isoformat()
         return obj_dict
+print(storage)
