@@ -24,7 +24,7 @@ class FileStorage():
         Args:
             obj: dictionary representation of an object
         '''
-        key = obj["__class__"] + obj["id"]
+        key = obj["__class__"] + "." + obj["id"]
         self.__objects[key] = obj
 
     def save(self):

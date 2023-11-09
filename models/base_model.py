@@ -3,7 +3,8 @@
 
 import uuid
 from datetime import datetime
-from __init__ import storage
+from models import storage
+
 
 class BaseModel:
     """This class will defines all common attributes/methods
@@ -32,6 +33,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+        storage.new(self.to_dict())
 
     def __str__(self):
         """returns a string
@@ -52,7 +54,7 @@ class BaseModel:
     def save(self):
         """updates the public instance attribute updated_at to current
         """
-
+        storage.save()
         self.updated_at = datetime.now()
 
     def to_dict(self):
@@ -66,4 +68,3 @@ class BaseModel:
         obj_dict['created_at'] = self.created_at.isoformat()
         obj_dict['updated_at'] = self.updated_at.isoformat()
         return obj_dict
-print(storage)

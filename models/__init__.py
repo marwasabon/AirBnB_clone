@@ -2,8 +2,8 @@
 '''
 Contains package initialization directives
 '''
-from engine import file_storage as fs
+from .engine.file_storage import FileStorage
 
 
-storage = fs.FileStorage()
+storage = FileStorage()
 storage.reload()
