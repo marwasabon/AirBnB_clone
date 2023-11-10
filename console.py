@@ -26,6 +26,28 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         '''Handle when empty line is passed'''
         pass
+  def do_create(self, line):
+        """Creates a new instance of BaseModel and saves it
+        Exceptions:
+            SyntaxError: when there is no args given
+            NameError: when there is no object taht has the name
+        """
+        try:
+            if not line:
+                raise SyntaxError()
+            my_list = line.split(" ")
+            if len(my_list) == 1:
+                obj = eval("{}()".format(my_list[0]))
+            else:
+                kwargs = HBNBCommand.parse_line(my_list[1:])
+                obj = eval("{}(**{})".format(my_list[0], kwargs))
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
+
 
 
 if __name__ == "__main__":
