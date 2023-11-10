@@ -8,7 +8,6 @@ from models import storage
 from models.base_model import BaseModel
 
 
-
 class HBNBCommand(cmd.Cmd):
     '''Command interpreter class
     contains simple command for CRUD operations
@@ -51,20 +50,20 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
-            
+
     def do_show(self, line):
-       """shows/prints  all the instances in string representation
+        """shows/prints  all the instances in string representation
         Exceptions:
             SyntaxError: when there is no args given
             NameError: when there is no object taht has the name
             IndexError: when there is no id given
             KeyError: when there is no valid id given
-            """        
+        """
         try:
-     if not line:
+            if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            if len(my_list) < 1:
+            if len(my_list) < 2:
                 raise SyntaxError()
             objects = storage.all()
             key = "{}.{}".format(my_list[0], my_list[1])
@@ -84,12 +83,11 @@ class HBNBCommand(cmd.Cmd):
             IndexError: when there is no id given
             KeyError: when there is no valid id given
         """
-   
         try:
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            if len(my_list) < 1:
+            if len(my_list) < 2:
                 raise SyntaxError()
             objects = storage.all()
             key = "{}.{}".format(my_list[0], my_list[1])
@@ -101,9 +99,9 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         except KeyError:
             print("** no instance found **")
-    
+
     def do_all(self, line):
-          """Prints all string representation of all instances
+        """Prints all string representation of all instances
         Exceptions:
             NameError: when there is no object taht has the name
             """
@@ -121,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
-    
+
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute
         Exceptions:

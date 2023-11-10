@@ -3,6 +3,7 @@
 from models.base_model import BaseModel
 from console import HBNBCommand
 import unittest
+from unittest.mock import patch
 
 
 
