@@ -8,7 +8,7 @@ import unittest
 
 class TestConsole(unittest.TestCase):
     def setUp(self):
-        self.console = Console()
+        self.console = HBNBCommand()
 
     def test_create_missing_class_name(self):
         result = self.console.onecmd('create')
@@ -69,6 +69,5 @@ class TestConsole(unittest.TestCase):
     def test_update_missing_value_for_attribute(self):
         result = self.console.onecmd('update BaseModel existing-id first_name')
         self.assertEqual(result, '** value missing **')
-
 if __name__ == "__main__":
     unittest.main()
