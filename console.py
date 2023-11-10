@@ -26,7 +26,8 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         '''Handle when empty line is passed'''
         pass
-  def do_create(self, line):
+
+    def do_create(self, line):
         """Creates a new instance of BaseModel and saves it
         Exceptions:
             SyntaxError: when there is no args given
