@@ -6,6 +6,7 @@ This module contains a command line interpreter
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -15,6 +16,11 @@ class HBNBCommand(cmd.Cmd):
     Attr:
         prompt(str): prompt string
     '''
+    class_dict = {
+        "BaseModel": 'BaseModel',
+        "User": 'User'
+    }
+
     prompt = "(hbnb) "
 
     def do_EOF(self, line):
@@ -33,17 +39,18 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel and saves it
         Exceptions:
             SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
+            NameError: when there is no object that has the name
         """
         try:
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
             if len(my_list) == 1:
-                obj = eval("{}()".format(my_list[0]))
+                print(self.class_dict[my_list[0]])
+                obj = eval("{}()".format(self.class_dict[my_list[0]]))
             else:
                 kwargs = HBNBCommand.parse_line(my_list[1:])
-                obj = eval("{}(**{})".format(my_list[0], kwargs))
+                obj = eval("{}(**{})".format(class_dict[my_list[0]], kwargs))
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
@@ -66,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
             if len(my_list) < 2:
                 raise SyntaxError()
             objects = storage.all()
-            key = "{}.{}".format(my_list[0], my_list[1])
+            key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
             print(objects[key])
         except SyntaxError:
             print("** class name missing **")
@@ -90,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
             if len(my_list) < 2:
                 raise SyntaxError()
             objects = storage.all()
-            key = "{}.{}".format(my_list[0], my_list[1])
+            key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
             del objects[key]
             storage.save()
         except SyntaxError:
