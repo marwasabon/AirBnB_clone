@@ -42,7 +42,8 @@ class test_storage_class(unittest.TestCase):
             "career": "pharmacist"
         }
         self.storage.new(my_dic)
-        self.assertEqual(self.storage._FileStorage__objects['model.25'], my_dic)
+        storage_dict = self.storage._FileStorage__objects
+        self.assertEqual(storage_dict, my_dic)
 
     def test_save_method(self):
         '''Test the save method FileStorage'''
@@ -55,11 +56,11 @@ class test_storage_class(unittest.TestCase):
         os.remove(path)
 
     def test_reload(self):
-       '''Test the reload method of FileStorage'''
-       path = self.storage._FileStorage__file_path
-       self.storage.new(self.my_dic)
-       obj = self.storage._FileStorage__objects
-       self.storage.save()
-       self.storage.reload()
-       self.assertEqual(obj, self.storage._FileStorage__objects)
-       os.remove(path)
+        '''Test the reload method of FileStorage'''
+        path = self.storage._FileStorage__file_path
+        self.storage.new(self.my_dic)
+        obj = self.storage._FileStorage__objects
+        self.storage.save()
+        self.storage.reload()
+        self.assertEqual(obj, self.storage._FileStorage__objects)
+        os.remove(path)

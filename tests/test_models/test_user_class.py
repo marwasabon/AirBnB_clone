@@ -5,6 +5,7 @@ Test suite Model for user class
 import unittest
 from models.user import User
 
+
 class Test_user_class(unittest.TestCase):
     '''
     Test suite
@@ -14,7 +15,6 @@ class Test_user_class(unittest.TestCase):
         setup test objects
         '''
         self.new_user = User()
-
 
     def test_instance(self):
         '''
