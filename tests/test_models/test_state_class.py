@@ -27,4 +27,4 @@ class test_state_class(unittest.TestCase):
         Test presence of state attributes
         '''
         self.assertTrue(hasattr(self.new_state, 'name'))
-        self.assertEqual(type(self.new_state) == str)
+        self.assertEqual(type(self.new_state.name), str)
