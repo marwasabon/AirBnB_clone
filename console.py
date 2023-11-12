@@ -25,7 +25,7 @@ class HBNBCommand(cmd.Cmd):
             "BaseModel": 'BaseModel',
             "User": 'User',
             "State": State, "City": City,
-            "Amenity": Amenity, 
+            "Amenity": Amenity,
             "Place": Place, "Review": Review
 
     }
@@ -56,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
             my_list = line.split(" ")
             if my_list[0] not in self.class_dict:
                 raise NameError()
-            if len (my_list) == 1:
+            if len(my_list) == 1:
                 obj = eval("{}()".format(my_list[0]))
             else:
                 kwargs = HBNBCommand.parse_line(my_list[1:])
@@ -67,36 +67,36 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
+
     def do_show(self, line):
         try:
             my_list = line.split()
             if not my_list:
-                raise SyntaxError
-    
-    		class_name = my_list[0]
-    		obj_id = my_list[1]
-    
-    		class_dict = storage.class_dict
-    		if class_name not in class_dict:
-                raise NameError
-    
-    		objects = storage.all()
-    		
-    		key = "{}.{}".format(class_name, obj_id)
-    		if key not in objects:
+                raise SyntaxError()
+            class_name = my_list[0]
+            obj_id = my_list[1]
+
+            class_dict = storage.class_dict
+            if class_name not in class_dict:
+                raise NameError()
+
+            objects = storage.all()
+
+            key = "{}.{}".format(class_name, obj_id)
+            if key not in objects:
                 raise KeyError
-    		print(objects[key])
+            print(objects[key])
         except SyntaxError:
             print("** class name missing **")
         except NameError:
-            print("** class doesn't exist **")  
+            print("** class doesn't exist **")
 
         except IndexError:
-		    print("** instance id missing **")
+            print("** instance id missing **")
 
-	    except KeyError:
-		    print("** no instance found **")
-            
+        except KeyError:
+            print("** no instance found **")
+
     def do_shows(self, line):
         """shows/prints  all the instances in string representation
         Exceptions:
