@@ -134,15 +134,16 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             if line not in self.class_dict:
+            args = line.split(" ", 1)
+            if args[0] not in self.all_classes:
                 raise NameError()
-            objects = storage.all()
+            objects = storage.all(self.all_classes[args[0]])
             for key in objects:
                 my_list.append(objects[key])
             print(my_list)
-        except SyntaxError:
-            print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
+
 
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute
