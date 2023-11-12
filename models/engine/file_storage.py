@@ -30,7 +30,28 @@ class FileStorage():
         'Place': Place,
         'Review': Review
     }
-    def all(self):
+
+    def all(self, cls=None):
+        '''returns dictionary __objects'''
+        if cls:
+            d = [
+                k
+                for k, v in inspect.getmembers(
+                    sys.modules[__name__],
+                    inspect.isclass
+                )
+            ]
+            if cls in d or cls.__name__ in d:
+                return {
+                    key: value
+                    for key, value in self.__objects.items()
+                    if value.__class__.__name__ is cls or
+                    value.__class__ is cls
+                }
+            else:
+                return dict()
+        
+    def alls(self):
         '''returns dictionary __objects'''
         return self.__objects
 
