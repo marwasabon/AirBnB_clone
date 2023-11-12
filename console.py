@@ -71,12 +71,16 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             if len(my_list) < 2:
-                raise SyntaxError()
+                raise IndexError()
             objects = storage.all()
             key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
+            if key not in objects:
+                raise KeyError()
             print(objects[key])
         except SyntaxError:
             print("** class name missing **")
+        except IndexError:
+            print("** instance id missing **")
         except NameError:
             print("** class doesn't exist **")
         except KeyError:
@@ -118,7 +122,7 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             if line not in self.class_dict:
                 raise NameError()
-            objects = storage.all(self.class_dict[line])
+            objects = storage.all()
             for key in objects:
                 my_list.append(objects[key])
             print(my_list)
