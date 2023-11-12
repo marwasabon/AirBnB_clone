@@ -116,9 +116,9 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            if line not in self.all_classes:
+            if line not in self.class_dict:
                 raise NameError()
-            objects = storage.all(self.all_classes[line])
+            objects = storage.all(self.class_dict[line])
             for key in objects:
                 my_list.append(objects[key])
             print(my_list)
@@ -141,9 +141,9 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             args = line.split(" ")
-            if args[0] not in self.all_classes:
+            if args[0] not in self.class_dict:
                 raise NameError()
-            objects = storage.all(self.all_classes[args[0]])
+            objects = storage.all(self.class_dict[args[0]])
             key = "{}.{}".format(args[0], args[1])
             if key not in objects:
                 raise KeyError()
