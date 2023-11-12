@@ -138,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
             objects = {
                 key: value
                 for key, value in objects.items()
-                if isinstance(value, self.class_dict[class_name])
+                if value.__class__.__name__ == class_name
             }
         my_list = [str(value) for value in objects.values()]
         print(my_list)
