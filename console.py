@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
-    def do_updates(self, line):
+    def do_update(self, line):
         """Updates an instanceby adding or updating attribute
         Exceptions:
             SyntaxError: when there is no args given
@@ -144,25 +144,20 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            args = line.split(" ")
+            args = line.split()
             if args[0] not in self.class_dict:
                 raise NameError()
-            if len(my_list) < 2:
+            if len(args) < 2:
                 raise IndexError()
-
             objects = storage.all()
             key = "{}.{}".format(args[0], args[1])
             if key not in objects:
                 raise KeyError()
+            obj = objects[key]
             if len(args) < 3:
                 raise AttributeError()
             if len(args) < 4:
                 raise ValueError()
-            if len(args) < 5:
-                raise SyntaxError()
-            if len(args) > 5:
-                raise SyntaxError()
-            obj = objects[key]
             setattr(obj, args[2], args[3])
             storage.save()
         except SyntaxError:
@@ -177,52 +172,6 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
         except ValueError:
             print("** value missing **")
-
-    def do_update(self, line):
-        """Updates an instanceby adding or updating attribute
-        Exceptions:
-            SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
-            IndexError: when there is no id given
-            KeyError: when there is no valid id given
-            AttributeError: when there is no attribute given
-            ValueError: when there is no value given
-        """
-        try:
-            if not line:
-                raise SyntaxError()
-            my_list = split(line, " ")
-            if my_list[0] not in self.all_classes:
-                raise NameError()
-            if len(my_list) < 2:
-                raise IndexError()
-            objects = storage.all()
-            key = my_list[0] + '.' + my_list[1]
-            if key not in objects:
-                raise KeyError()
-            if len(my_list) < 3:
-                raise AttributeError()
-            if len(my_list) < 4:
-                raise ValueError()
-            v = objects[key]
-            try:
-                v.__dict__[my_list[2]] = eval(my_list[3])
-            except Exception:
-                v.__dict__[my_list[2]] = my_list[3]
-                v.save()
-        except SyntaxError:
-            print("** class name missing **")
-        except NameError:
-            print("** class doesn't exist **")
-        except IndexError:
-            print("** instance id missing **")
-        except KeyError:
-            print("** no instance found **")
-        except AttributeError:
-            print("** attribute name missing **")
-        except ValueError:
-            print("** value missing **")
-
 
 
 if __name__ == "__main__":
