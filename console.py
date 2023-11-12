@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             if line not in self.class_dict:
-            args = line.split(" ", 1)
+                args = line.split(" ", 1)
             if args[0] not in self.class_dict:
                 raise NameError()
             objects = storage.all(self.class_dict[args[0]])
