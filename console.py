@@ -80,13 +80,16 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            if my_list[0] not in self.class_dict:
+                raise NameError()
             if len(my_list) < 2:
                 raise IndexError()
             objects = storage.all()
             key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
             if key not in objects:
                 raise KeyError()
-            print(objects[key])
+            else:
+                print(objects[key])
         except SyntaxError:
             print("** class name missing **")
         except IndexError:
@@ -125,23 +128,22 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances
         Exceptions:
             NameError: when there is no object taht has the name
-        """
+            """
         my_list = []
-        if not line:
+        try:
+            if not line:
+                raise SyntaxError()
+            if line not in self.class_dict:
+                raise NameError()
             objects = storage.all()
             for key in objects:
                 my_list.append(objects[key])
             print(my_list)
-            return
-        try:
-            args = line.split(" ", 1)
-            if args[0] not in self.class_dict:
-                raise NameError()
-            objects = storage.all(self.class_dict[args[0]])
-            for key in objects:
-                my_list.append(objects[key])
-            print(my_list)
-    
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
+
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute
         Exceptions:
