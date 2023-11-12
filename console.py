@@ -144,21 +144,22 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            args = line.split(" ")
+            args = line.split()
             if args[0] not in self.class_dict:
                 raise NameError()
             if len(args) < 2:
                 raise IndexError()
-
             objects = storage.all()
             key = "{}.{}".format(args[0], args[1])
             if key not in objects:
                 raise KeyError()
+            obj = objects[key]
             if len(args) < 3:
                 raise AttributeError()
             if len(args) < 4:
                 raise ValueError()
             obj = objects[key]
+
             setattr(obj, args[2], args[3])
             storage.save()
         except SyntaxError:
