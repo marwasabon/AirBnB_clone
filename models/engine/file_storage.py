@@ -34,22 +34,13 @@ class FileStorage():
     def all(self, cls=None):
         '''returns dictionary __objects'''
         if cls:
-            d = [
-                k
-                for k, v in inspect.getmembers(
-                    sys.modules[__name__],
-                    inspect.isclass
-                )
-            ]
-            if cls in d or cls.__name__ in d:
-                return {
-                    key: value
-                    for key, value in self.__objects.items()
-                    if value.__class__.__name__ is cls or
-                    value.__class__ is cls
-                }
-            else:
-                return dict()
+            objects = storage.all(cls)
+            for key in objects:
+                print(objects[key])
+        else:
+            objects = storage.all()
+            for key in objects:
+                print(objects[key])
         
     def alls(self):
         '''returns dictionary __objects'''
