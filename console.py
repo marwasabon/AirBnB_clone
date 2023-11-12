@@ -147,7 +147,7 @@ class HBNBCommand(cmd.Cmd):
             args = line.split(" ")
             if args[0] not in self.class_dict:
                 raise NameError()
-            if len(my_list) < 2:
+            if len(args) < 2:
                 raise IndexError()
 
             objects = storage.all()
@@ -158,10 +158,6 @@ class HBNBCommand(cmd.Cmd):
                 raise AttributeError()
             if len(args) < 4:
                 raise ValueError()
-            if len(args) < 5:
-                raise SyntaxError()
-            if len(args) > 5:
-                raise SyntaxError()
             obj = objects[key]
             setattr(obj, args[2], args[3])
             storage.save()
