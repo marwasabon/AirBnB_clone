@@ -26,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
             "User": 'User',
             "State": State, "City": City,
             "Amenity": Amenity, 
-            "Place": Place, "Review": Review}
+            "Place": Place, "Review": Review
 
     }
 
@@ -54,9 +54,10 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            if len(my_list) == 1:
-                print(self.class_dict[my_list[0]])
-                obj = eval("{}()".format(self.class_dict[my_list[0]]))
+            if my_list[0] not in self.class_dict:
+                raise NameError()
+            if len (my_list) == 1:
+                obj = eval("{}()".format(my_list[0]))
             else:
                 kwargs = HBNBCommand.parse_line(my_list[1:])
                 obj = eval("{}(**{})".format(class_dict[my_list[0]], kwargs))
