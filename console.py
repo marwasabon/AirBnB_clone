@@ -17,8 +17,8 @@ class HBNBCommand(cmd.Cmd):
         prompt(str): prompt string
     '''
     class_dict = {
-        "BaseModel": 'BaseModel',
-        "User": 'User'
+            "BaseModel": 'BaseModel',
+            "User": 'User'
     }
 
     prompt = "(hbnb) "
@@ -147,14 +147,17 @@ class HBNBCommand(cmd.Cmd):
             args = line.split(" ")
             if args[0] not in self.class_dict:
                 raise NameError()
-            objects = storage.all(self.class_dict[args[0]])
+            if len(my_list) < 2:
+                raise IndexError()
+
+            objects = storage.all()
             key = "{}.{}".format(args[0], args[1])
             if key not in objects:
                 raise KeyError()
             if len(args) < 3:
-                raise SyntaxError()
+                raise AttributeError()
             if len(args) < 4:
-                raise SyntaxError()
+                raise ValueError()
             if len(args) < 5:
                 raise SyntaxError()
             if len(args) > 5:
@@ -163,12 +166,16 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, args[2], args[3])
             storage.save()
         except SyntaxError:
-            print("** attribute name missing **")
+            print("** class name missing **")
+        except IndexError:
+            print("** instance id missing **")
         except NameError:
             print("** class doesn't exist **")
         except KeyError:
             print("** no instance found **")
         except AttributeError:
+            print("** attribute name missing **")
+        except ValueError:
             print("** value missing **")
 
 
