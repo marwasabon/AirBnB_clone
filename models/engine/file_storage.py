@@ -4,7 +4,11 @@ import json
 import os
 from models.base_model import BaseModel
 from models.user import User
-
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 class FileStorage():
     '''Serializes instnaces to JSON file and deserialize JSON file to instances
@@ -17,9 +21,20 @@ class FileStorage():
     __file_path = 'file.json'
     __objects = dict()
 
-    def all(self):
+    class_dict = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Place': Place,
+        'Review': Review
+    }
+
+    def all(self, cls=None):
         '''returns dictionary __objects'''
         return self.__objects
+
 
     def new(self, obj):
         '''sets in __objects the obj with key <obj classname.id>
@@ -47,8 +62,8 @@ class FileStorage():
                 for key, dic in dic_obj.items():
                     class_name = dic['__class__']
                     del dic['__class__']
-                    if class_name == 'BaseModel':
-                        new_instance = BaseModel(**dic)
-                    elif class_name == 'User':
-                        new_instance = User(**dic)
-                    self.__objects[key] = new_instance
+                    if class_name in self.class_dict:
+                        cls = self.class_dict[class_name]
+                        obj = cls(**dic)
+                        self.__objects[key] = obj
+

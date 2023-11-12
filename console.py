@@ -26,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
             "User": 'User',
             "State": State, "City": City,
             "Amenity": Amenity, 
-            "Place": Place, "Review": Review}
+            "Place": Place, "Review": Review
 
     }
 
@@ -54,9 +54,10 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            if len(my_list) == 1:
-                print(self.class_dict[my_list[0]])
-                obj = eval("{}()".format(self.class_dict[my_list[0]]))
+            if my_list[0] not in self.class_dict:
+                raise NameError()
+            if len (my_list) == 1:
+                obj = eval("{}()".format(my_list[0]))
             else:
                 kwargs = HBNBCommand.parse_line(my_list[1:])
                 obj = eval("{}(**{})".format(class_dict[my_list[0]], kwargs))
@@ -79,13 +80,16 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            if my_list[0] not in self.class_dict:
+                raise NameError()
             if len(my_list) < 2:
                 raise IndexError()
             objects = storage.all()
             key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
             if key not in objects:
                 raise KeyError()
-            print(objects[key])
+            else:
+                print(objects[key])
         except SyntaxError:
             print("** class name missing **")
         except IndexError:
@@ -125,20 +129,19 @@ class HBNBCommand(cmd.Cmd):
         Exceptions:
             NameError: when there is no object taht has the name
             """
-        my_list = []
-        try:
-            if not line:
-                raise SyntaxError()
-            if line not in self.class_dict:
-                raise NameError()
-            objects = storage.all()
-            for key in objects:
-                my_list.append(objects[key])
-            print(my_list)
-        except SyntaxError:
-            print("** class name missing **")
-        except NameError:
-            print("** class doesn't exist **")
+        objects = storage.all()
+        if line:
+            class_name = line.split(" ")[0]
+            if class_name not in self.class_dict:
+                print("** class doesn't exist **")
+                return
+            objects = {
+                key: value
+                for key, value in objects.items()
+                if value.__class__.__name__ == class_name
+            }
+        my_list = [str(value) for value in objects.values()]
+        print(my_list)
 
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute
