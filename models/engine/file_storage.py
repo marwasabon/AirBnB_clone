@@ -35,10 +35,6 @@ class FileStorage():
         '''returns dictionary __objects'''
         return self.__objects
 
-        
-    def alls(self):
-        '''returns dictionary __objects'''
-        return self.__objects
 
     def new(self, obj):
         '''sets in __objects the obj with key <obj classname.id>
