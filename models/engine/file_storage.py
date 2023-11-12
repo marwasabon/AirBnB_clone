@@ -47,8 +47,8 @@ class FileStorage():
                 for key, dic in dic_obj.items():
                     class_name = dic['__class__']
                     del dic['__class__']
-                    if class_name == 'BaseModel':
-                        new_instance = BaseModel(**dic)
-                    elif class_name == 'User':
-                        new_instance = User(**dic)
-                    self.__objects[key] = new_instance
+                    if class_name in self.class_dict:
+                        cls = self.class_dict[class_name]
+                        obj = cls(**dic)
+                        self.__objects[key] = obj
+
