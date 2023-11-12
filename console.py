@@ -158,6 +158,8 @@ class HBNBCommand(cmd.Cmd):
                 raise AttributeError()
             if len(args) < 4:
                 raise ValueError()
+            obj = objects[key]
+
             setattr(obj, args[2], args[3])
             storage.save()
         except SyntaxError:
