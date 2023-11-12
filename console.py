@@ -141,7 +141,7 @@ class HBNBCommand(cmd.Cmd):
             for key in objects:
                 my_list.append(objects[key])
             print(my_list)
-
+    
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute
         Exceptions:
