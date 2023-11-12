@@ -67,8 +67,37 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
-
     def do_show(self, line):
+        try:
+            my_list = line.split()
+            if not my_list:
+                raise SyntaxError
+    
+    		class_name = my_list[0]
+    		obj_id = my_list[1]
+    
+    		class_dict = storage.class_dict
+    		if class_name not in class_dict:
+                raise NameError
+    
+    		objects = storage.all()
+    		
+    		key = "{}.{}".format(class_name, obj_id)
+    		if key not in objects:
+                raise KeyError
+    		print(objects[key])
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")  
+
+        except IndexError:
+		    print("** instance id missing **")
+
+	    except KeyError:
+		    print("** no instance found **")
+            
+    def do_shows(self, line):
         """shows/prints  all the instances in string representation
         Exceptions:
             SyntaxError: when there is no args given
