@@ -6,6 +6,7 @@ This module contains a command line interpreter
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -15,6 +16,11 @@ class HBNBCommand(cmd.Cmd):
     Attr:
         prompt(str): prompt string
     '''
+    class_dict = {
+            "BaseModel": 'BaseModel',
+            "User": 'User'
+    }
+
     prompt = "(hbnb) "
 
     def do_EOF(self, line):
@@ -33,17 +39,18 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel and saves it
         Exceptions:
             SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
+            NameError: when there is no object that has the name
         """
         try:
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
             if len(my_list) == 1:
-                obj = eval("{}()".format(my_list[0]))
+                print(self.class_dict[my_list[0]])
+                obj = eval("{}()".format(self.class_dict[my_list[0]]))
             else:
                 kwargs = HBNBCommand.parse_line(my_list[1:])
-                obj = eval("{}(**{})".format(my_list[0], kwargs))
+                obj = eval("{}(**{})".format(class_dict[my_list[0]], kwargs))
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
@@ -64,12 +71,16 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             if len(my_list) < 2:
-                raise SyntaxError()
+                raise IndexError()
             objects = storage.all()
-            key = "{}.{}".format(my_list[0], my_list[1])
+            key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
+            if key not in objects:
+                raise KeyError()
             print(objects[key])
         except SyntaxError:
             print("** class name missing **")
+        except IndexError:
+            print("** instance id missing **")
         except NameError:
             print("** class doesn't exist **")
         except KeyError:
@@ -90,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
             if len(my_list) < 2:
                 raise SyntaxError()
             objects = storage.all()
-            key = "{}.{}".format(my_list[0], my_list[1])
+            key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
             del objects[key]
             storage.save()
         except SyntaxError:
@@ -109,9 +120,9 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            if line not in self.all_classes:
+            if line not in self.class_dict:
                 raise NameError()
-            objects = storage.all(self.all_classes[line])
+            objects = storage.all()
             for key in objects:
                 my_list.append(objects[key])
             print(my_list)
@@ -134,16 +145,19 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             args = line.split(" ")
-            if args[0] not in self.all_classes:
+            if args[0] not in self.class_dict:
                 raise NameError()
-            objects = storage.all(self.all_classes[args[0]])
+            if len(my_list) < 2:
+                raise IndexError()
+
+            objects = storage.all()
             key = "{}.{}".format(args[0], args[1])
             if key not in objects:
                 raise KeyError()
             if len(args) < 3:
-                raise SyntaxError()
+                raise AttributeError()
             if len(args) < 4:
-                raise SyntaxError()
+                raise ValueError()
             if len(args) < 5:
                 raise SyntaxError()
             if len(args) > 5:
@@ -152,12 +166,16 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, args[2], args[3])
             storage.save()
         except SyntaxError:
-            print("** attribute name missing **")
+            print("** class name missing **")
+        except IndexError:
+            print("** instance id missing **")
         except NameError:
             print("** class doesn't exist **")
         except KeyError:
             print("** no instance found **")
         except AttributeError:
+            print("** attribute name missing **")
+        except ValueError:
             print("** value missing **")
 
 
