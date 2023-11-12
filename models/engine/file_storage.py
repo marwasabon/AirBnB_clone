@@ -33,14 +33,8 @@ class FileStorage():
 
     def all(self, cls=None):
         '''returns dictionary __objects'''
-        if cls:
-            objects = storage.all(cls)
-            for key in objects:
-                print(objects[key])
-        else:
-            objects = storage.all()
-            for key in objects:
-                print(objects[key])
+        return self.__objects
+
         
     def alls(self):
         '''returns dictionary __objects'''
