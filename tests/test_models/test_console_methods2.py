@@ -41,23 +41,24 @@ class TestConsole(unittest.TestCase):
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("update BaseModel 12345")
             self.assertTrue(f.getvalue().strip(), "** no instance found **")
+
     def test_destroy(self):
         '''Test the destroy method'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("destroy BaseModel 12345")
             self.assertTrue(f.getvalue().strip(), "** no instance found **")
+
     def test_quit(self):
         '''Test the quit method'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
-            self.assertTrue(self.console.onecmd("quit") == True)
- 
+            self.assertTrue(self.console.onecmd("quit") is True)
+
     def test_EOF(self):
         '''Test the EOF meteod'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
-            self.assertTrue(self.console.onecmd("EOF") == True)
+            self.assertTrue(self.console.onecmd("EOF") is True)
 
     def test_empty_line(self):
         '''Test the empty line method'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertTrue(self.console.onecmd(" ") == None)
-
+            self.assertTrue(self.console.onecmd(" ") is None)
