@@ -41,9 +41,10 @@ class test_storage_class(unittest.TestCase):
             "name": "Okibe",
             "career": "pharmacist"
         }
-        self.storage.new(my_dic)
-        storage_dict = self.storage._FileStorage__objects
-        self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
+       self.storage.new(my_dic)
+       storage_dict = self.storage._FileStorage__objects
+       self.assertEqual(len(storage_dict), 1)
+       self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
 
     def test_save_method(self):
         '''Test the save method FileStorage'''
