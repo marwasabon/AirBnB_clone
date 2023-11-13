@@ -6,14 +6,6 @@ import unittest
 from unittest.mock import patch
 from console import HBNBCommand
 
-class TestConsole(unittest.TestCase):
-    def setUp(self):
-        self.console = HBNBCommand()
-Here are the changes that you can make to the test code to fix the failures:
-from unittest import TestCase
-from unittest.mock import patch
-from console import HBNBCommand
-
 
 class TestConsole(TestCase):
     def setUp(self):
