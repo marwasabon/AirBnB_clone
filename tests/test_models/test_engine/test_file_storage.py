@@ -49,7 +49,6 @@ class test_storage_class(unittest.TestCase):
         self.storage.save()
         self.assertTrue(os.path.exists(path))
         self.assertNotEqual(os.path.getsize, 0)
-        os.remove(path)
 
     def test_reload(self):
         '''Test the reload method of FileStorage'''
@@ -59,4 +58,3 @@ class test_storage_class(unittest.TestCase):
         self.storage.save()
         self.storage.reload()
         self.assertEqual(obj, self.storage._FileStorage__objects)
-        os.remove(path)
