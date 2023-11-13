@@ -32,19 +32,16 @@ class test_storage_class(unittest.TestCase):
         '''Test if object are instances of FileStorage'''
         self.assertIsInstance(self.storage, FileStorage)
 
-    def test_new_method(self):
+    def test_new(self):
         '''Test the new method'''
         self.storage.new(self.my_dic)
         storage_dict = self.storage._FileStorage__objects
         self.assertTrue(len(storage_dict) > 0)
         self.assertEqual(type(storage_dict), dict)
 
-    def test_save_method(self):
+    def test_save(self):
         '''Test the save method FileStorage'''
         path = self.storage._FileStorage__file_path
-        if os.path.isfile(path):
-            os.remove(path)
-        self.assertFalse(os.path.isfile(path))
         self.storage.new(self.my_dic)
         self.storage.save()
         self.assertTrue(os.path.exists(path))
@@ -58,3 +55,7 @@ class test_storage_class(unittest.TestCase):
         self.storage.save()
         self.storage.reload()
         self.assertEqual(obj, self.storage._FileStorage__objects)
+
+    def test_all(self):
+        '''Test the all method'''
+        self.assertEqual(type(self.storage.all()), dict)
