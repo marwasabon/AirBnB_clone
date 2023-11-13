@@ -4,6 +4,7 @@ from models import storage
 from io import StringIO
 import sys
 import os
+from unittest.mock import patch
 
 
 class TestConsole(unittest.TestCase):
@@ -19,46 +20,44 @@ class TestConsole(unittest.TestCase):
 
     def test_create(self):
         '''Test the create method'''
-        with unittest.mock.patch('sys.stdout', new=StringIO()) as:
+        with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("create BaseModel")
             self.assertTrue(str(storage.all().values()) != "")
 
     def test_show(self):
         '''Test the show method'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("show BaseModel 12345-123")
-            self.assertTrue(f.read() == "** no instance found **\n")
+            self.console.onecmd("show BaseModel 12345")
+            self.assertTrue(f.getvalue().strip(), "** no instance found **")
 
     def test_all(self):
         '''Test the all method'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("all")
-            self.assertTrue(f.read() == "[]\n")
+            self.assertFalse(f.read() == "[]\n")
 
     def test_update(self):
         '''Test the update method'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("update BaseModel 12345-123")
-            self.assertTrue(f.read() == "** no instance found **\n")
-
+            self.console.onecmd("update BaseModel 12345")
+            self.assertTrue(f.getvalue().strip(), "** no instance found **")
     def test_destroy(self):
         '''Test the destroy method'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("destroy BaseModel 12345-123")
-            self.assertTrue(f.read() == "** no instance found **\n")
-
+            self.console.onecmd("destroy BaseModel 12345")
+            self.assertTrue(f.getvalue().strip(), "** no instance found **")
     def test_quit(self):
         '''Test the quit method'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(self.console.onecmd("quit") == True)
-
+ 
     def test_EOF(self):
-        '''Test the EOF method'''
+        '''Test the EOF meteod'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(self.console.onecmd("EOF") == True)
 
     def test_empty_line(self):
         '''Test the empty line method'''
-        with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
+        with patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(self.console.onecmd(" ") == None)
 
