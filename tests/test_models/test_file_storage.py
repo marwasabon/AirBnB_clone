@@ -43,7 +43,7 @@ class test_storage_class(unittest.TestCase):
         }
         self.storage.new(my_dic)
         storage_dict = self.storage._FileStorage__objects
-        self.assertEqual(storage_dict, my_dic)
+        self.assertEqual(storage_dict, {self.my_dic['__class__'] + "." + self.my_dic['id']: self.my_dic})
 
     def test_save_method(self):
         '''Test the save method FileStorage'''
