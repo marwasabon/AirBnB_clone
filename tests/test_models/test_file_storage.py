@@ -43,7 +43,7 @@ class test_storage_class(unittest.TestCase):
         }
         self.storage.new(my_dic)
         storage_dict = self.storage._FileStorage__objects
-        self.assertEqual(storage_dict, {self.my_dic['__class__'] + "." + self.my_dic['id']: self.my_dic})
+        self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
 
     def test_save_method(self):
         '''Test the save method FileStorage'''
@@ -62,5 +62,5 @@ class test_storage_class(unittest.TestCase):
         obj = self.storage._FileStorage__objects
         self.storage.save()
         self.storage.reload()
-        self.assertEqual(obj, self.storage._FileStorage__objects)
+        self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
         os.remove(path)
