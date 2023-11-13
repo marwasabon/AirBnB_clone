@@ -19,7 +19,7 @@ class test_storage_class(unittest.TestCase):
             "__class__": "model",
             "name": "Okibe",
             "career": "pharmacist"
-        }
+            }
         self.storage = FileStorage()
 
     def test_instance_attributes(self):
@@ -36,15 +36,15 @@ class test_storage_class(unittest.TestCase):
     def test_new_method(self):
         '''Test the new method'''
         my_dic = {
-            "id": "25",
-            "__class__": "model",
-            "name": "Okibe",
-            "career": "pharmacist"
-        }
-       self.storage.new(my_dic)
-       storage_dict = self.storage._FileStorage__objects
-       self.assertEqual(len(storage_dict), 1)
-       self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
+                "id": "25",
+                "__class__": "model",
+                "name": "Okibe",
+                "career": "pharmacist"
+                }
+        self.storage.new(my_dic)
+        storage_dict = self.storage._FileStorage__objects
+        self.assertEqual(len(storage_dict), 1)
+        self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
 
     def test_save_method(self):
         '''Test the save method FileStorage'''
