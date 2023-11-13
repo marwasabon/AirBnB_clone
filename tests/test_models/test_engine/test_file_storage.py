@@ -46,7 +46,6 @@ class test_storage_class(unittest.TestCase):
             os.remove(path)
         self.assertFalse(os.path.isfile(path))
         self.storage.new(self.my_dic)
-        self.my_dic.save()
         self.storage.save()
         self.assertTrue(os.path.exists(path))
         self.assertNotEqual(os.path.getsize, 0)
