@@ -8,21 +8,20 @@ Test cases:
 import os
 import unittest
 from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
 
 
 class test_storage_class(unittest.TestCase):
     '''Test suit for FileStorage class'''
     def setUp(self):
         '''Set as instance for every test'''
-        self.my_dic = {
-            "id": "25",
-            "__class__": "model",
-            "name": "Okibe",
-            "career": "pharmacist"
-        }
+        self.my_dic = BaseModel()
         self.storage = FileStorage()
 
     def test_instance_attributes(self):
+        '''
+        Test the attribute type and existence
+        '''
         self.assertEqual(self.storage._FileStorage__file_path, "file.json")
         self.assertEqual(type(self.storage._FileStorage__objects), dict)
         self.assertEqual(type(self.storage._FileStorage__file_path), str)
@@ -35,19 +34,16 @@ class test_storage_class(unittest.TestCase):
 
     def test_new_method(self):
         '''Test the new method'''
-        my_dic = {
-            "id": "25",
-            "__class__": "model",
-            "name": "Okibe",
-            "career": "pharmacist"
-        }
-        self.storage.new(my_dic)
+        self.storage.new(self.my_dic)
         storage_dict = self.storage._FileStorage__objects
-        self.assertEqual(storage_dict, my_dic)
+        self.assertTrue(len(storage_dict) > 0)
+        self.assertEqual(type(storage_dict), dict)
 
     def test_save_method(self):
         '''Test the save method FileStorage'''
         path = self.storage._FileStorage__file_path
+        if os.path.isfile(path):
+            os.remove(path)
         self.assertFalse(os.path.isfile(path))
         self.storage.new(self.my_dic)
         self.storage.save()
