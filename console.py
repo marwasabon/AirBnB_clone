@@ -191,7 +191,7 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
         except ValueError:
             print("** value missing **")
-    
+
     def count(self, line):
         """count the number of instances of a class
         """
