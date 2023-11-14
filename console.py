@@ -198,10 +198,13 @@ class HBNBCommand(cmd.Cmd):
         class_name = line.split(" ")[0]
         if class_name in self.class_dict:
             objects = storage.all()
-            count = sum(1 for key in objects if key.startswith(class_name + "."))
+            count = sum(
+                    1 for key in objects if key.startswith(class_name + ".")
+                    )
             print(count)
         else:
             print("** class doesn't exist **")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
