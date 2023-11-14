@@ -197,15 +197,14 @@ class HBNBCommand(cmd.Cmd):
         """
         counter = 0
         try:
-            my_list = split(" ")
-            if my_list[0] not in self.class_dict:
+            class_name = line.split()[0]
+            if class_name not in self.class_dict:
                 raise NameError()
             objects = storage.all()
-            for key in objects:
-                name = key.split('.')
-                if name[0] == my_list[0]:
-                    counter += 1
-            print(counter)
+            count = sum(1 for obj in objects.values() if isinstance(obj, self.class_dict[class_name]))
+            print(count)
+        except IndexError:
+            print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
 
