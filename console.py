@@ -205,7 +205,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
-  def count(self, line):
+    def count(self, line):
         """count the number of instances of a class
         """
         counter = 0
