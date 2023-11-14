@@ -192,12 +192,12 @@ class HBNBCommand(cmd.Cmd):
         except ValueError:
             print("** value missing **")
 
-    def count(self, line):
+    def do_count(self, line):
         """count the number of instances of a class
         """
         counter = 0
         try:
-            my_list = split(line, " ")
+            my_list = split(" ")
             if my_list[0] not in self.class_dict:
                 raise NameError()
             objects = storage.all()
