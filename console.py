@@ -136,7 +136,6 @@ class HBNBCommand(cmd.Cmd):
         except KeyError:
             print("** no instance found **")
 
-
     def do_all(self, line):
         """Prints all string representation of all instances
         Exceptions:
