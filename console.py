@@ -116,18 +116,26 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            if my_list[0] not in self.class_dict:
+                raise NameError()
             if len(my_list) < 2:
-                raise SyntaxError()
+                raise IndexError()
             objects = storage.all()
-            key = "{}.{}".format(self.class_dict[my_list[0]], my_list[1])
-            del objects[key]
-            storage.save()
+            key = my_list[0] + '.' + my_list[1]
+            if key in objects:
+                del objects[key]
+                storage.save()
+            else:
+                raise KeyError()
         except SyntaxError:
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
+        except IndexError:
+            print("** instance id missing **")
         except KeyError:
             print("** no instance found **")
+
 
     def do_all(self, line):
         """Prints all string representation of all instances
@@ -203,23 +211,6 @@ class HBNBCommand(cmd.Cmd):
                     )
             print(count)
         else:
-            print("** class doesn't exist **")
-
-    def count(self, line):
-        """count the number of instances of a class
-        """
-        counter = 0
-        try:
-            my_list = split(" ")
-            if my_list[0] not in self.class_dict:
-                raise NameError()
-            objects = storage.all()
-            for key in objects:
-                name = key.split('.')
-                if name[0] == my_list[0]:
-                    counter += 1
-            print(counter)
-        except NameError:
             print("** class doesn't exist **")
 
 
