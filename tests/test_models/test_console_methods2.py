@@ -32,7 +32,7 @@ class TestConsole(unittest.TestCase):
 
     def test_all(self):
         '''Test the all method'''
-        with patch('sys.stdout', new=StringIO()) as f:
+        with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("all")
             self.assertFalse(f.read() == "[]\n")
 
@@ -53,19 +53,8 @@ class TestConsole(unittest.TestCase):
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(self.console.onecmd("quit") is True)
 
-    def test_destroy(self):
-        '''Test the destroy method'''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("destroy BaseModel 12345")
-            self.assertTrue(f.getvalue().strip() == "** no instance found **")
-
-    def test_quit(self):
-        '''Test the quit method'''
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.assertTrue(self.console.onecmd("quit") is True)
-
     def test_EOF(self):
-        '''Test the EOF method'''
+        '''Test the EOF meteod'''
         with unittest.mock.patch('sys.stdout', new=StringIO()) as f:
             self.assertTrue(self.console.onecmd("EOF") is True)
 

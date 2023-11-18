@@ -34,10 +34,23 @@ class test_storage_class(unittest.TestCase):
 
     def test_new(self):
         '''Test the new method'''
+<<<<<<< HEAD:tests/test_models/test_engine/test_file_storage.py
         self.storage.new(self.my_dic)
         storage_dict = self.storage._FileStorage__objects
         self.assertTrue(len(storage_dict) > 0)
         self.assertEqual(type(storage_dict), dict)
+=======
+        my_dic = {
+                "id": "25",
+                "__class__": "model",
+                "name": "Okibe",
+                "career": "pharmacist"
+                }
+        self.storage.new(my_dic)
+        storage_dict = self.storage._FileStorage__objects
+        self.assertEqual(len(storage_dict), 1)
+        self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
+>>>>>>> marwa:tests/test_models/test_file_storage.py
 
     def test_save(self):
         '''Test the save method FileStorage'''
@@ -56,8 +69,13 @@ class test_storage_class(unittest.TestCase):
         obj = self.storage._FileStorage__objects
         self.storage.save()
         self.storage.reload()
+<<<<<<< HEAD:tests/test_models/test_engine/test_file_storage.py
         self.assertEqual(obj, self.storage._FileStorage__objects)
 
     def test_all(self):
         '''Test the all method'''
         self.assertEqual(type(self.storage.all()), dict)
+=======
+        self.assertIn(my_obj.__class__.__name__ + "." + my_obj.id, storage_dict)
+        os.remove(path)
+>>>>>>> marwa:tests/test_models/test_file_storage.py
