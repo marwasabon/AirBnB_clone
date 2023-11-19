@@ -16,8 +16,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str(self):
         base_model = BaseModel()
-        expected_str = "[BaseModel] ({}) {}".
-        format(base_model.id, base_model.__dict__)
+        expected_str = "[BaseModel] ({}) {}".format(
+                base_model.id, base_model.__dict__)
         self.assertEqual(str(base_model), expected_str)
 
     def test_save(self):
@@ -35,10 +35,9 @@ class TestBaseModel(unittest.TestCase):
         print(my_model)
         my_model_json = my_model.to_dict()
         print(my_model_json)
-        print("JSON of my_model:")
-        print("\t{}: ({}) - {}".format(
-                key, type(my_model_json[key]), my_model_json[key]
-                ))
+        for key in my_model_json.keys():
+            print("\t{}: ({}) - {}".format(
+                key, type(my_model_json[key]), my_model_json[key]))
 
     def test_to_dict(self):
         base_model = BaseModel()
